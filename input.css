@@ -1,0 +1,50 @@
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.product-card {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.btn-premium {
+    background: #fbbf24;
+    color: #000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-premium:active {
+    transform: scale(0.95);
+    background: #f59e0b;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-card {
+    animation: slideUp 0.6s ease-out forwards;
+}
+/* Il colore esatto di Amazon */
+.btn-amazon {
+    background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+    border: 1px solid #a88734;
+    border-radius: 8px;
+    color: #111;
+    font-weight: 500;
+    box-shadow: 0 1px 0 rgba(255,255,255,.4) inset;
+    transition: background 0.2s;
+}
+
+/* Effetto quando ci passi sopra col mouse */
+.btn-amazon:hover {
+    background: linear-gradient(to bottom, #f5d78e, #eeb933);
+    border-color: #9c7d2d;
+}
+
+/* Effetto quando lo clicchi (si schiaccia) */
+.btn-amazon:active {
+    background: #f0c14b;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15) inset;
+}
