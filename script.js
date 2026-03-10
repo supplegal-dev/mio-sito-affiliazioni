@@ -68,10 +68,10 @@ const articoli = [
         faq: [{ q: "Funziona con iPhone e Android?", a: "Assolutamente sì, l'app Niimbot è gratuita e molto intuitiva per entrambi i sistemi." }]
     },
 
-    // --- CATEGORIA: CASA & PULIZIE ---
+    // --- CATEGORIA: PULIZIE ---
     {
         id: 'tineco-s5',
-        categoria: 'casa',
+        categoria: 'pulizie',
         tipo: 'singolo',
         titolo: "Ho smesso di passare il mocio: la rivoluzione Tineco",
         voto: "9.7/10",
@@ -85,6 +85,8 @@ const articoli = [
         ],
         faq: [{ q: "Lascia aloni?", a: "No, grazie al sistema a flusso d'acqua costante il pavimento asciuga subito." }]
     },
+
+    // --- CATEGORIA: CASA ---
     {
         id:'top-3lampade',
         categoria: 'casa',
