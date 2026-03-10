@@ -1,9 +1,7 @@
 ---
-// Importiamo il database JSON che abbiamo creato prima
 import prodottiData from '../../data/prodotti.json';
 import Layout from '../../layouts/Layout.astro';
 
-// Questa funzione dice ad Astro: "Crea una pagina per ogni oggetto nel JSON"
 export async function getStaticPaths() {
   return prodottiData.map((prodotto) => {
     return {
@@ -15,77 +13,85 @@ export async function getStaticPaths() {
 
 const { prodotto } = Astro.props;
 const oggi = new Date().toLocaleDateString('it-IT');
-
-// RECUPERO BASE URL PER GITHUB PAGES
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title={prodotto.titolo}>
-  <main class="max-w-2xl mx-auto p-4 pt-10">
+  <main class="max-w-3xl mx-auto p-4 pt-10 pb-32">
     <a href={`${baseUrl}/`} class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-black mb-8 inline-block transition-colors">
       ← Back to Selection
     </a>
 
-    <div class="flex justify-between uppercase text-[10px] font-black tracking-widest mb-4">
-      <span class="text-red-600">{prodotto.categoria}</span>
-      {prodotto.voto && <span class="italic">Score: {prodotto.voto}/10</span>}
+    <div class="flex justify-between items-center mb-6">
+        <span class="text-red-600 text-[10px] font-black uppercase tracking-widest bg-red-50 px-3 py-1 rounded-full">{prodotto.categoria}</span>
+        {prodotto.voto && <span class="text-xs font-bold italic bg-black text-white px-3 py-1 rounded-lg">Rating: {prodotto.voto}/10</span>}
     </div>
 
-    <h1 class="text-4xl md:text-5xl serif mb-8 leading-tight">{prodotto.titolo}</h1>
+    <h1 class="text-5xl md:text-7xl serif mb-10 leading-[0.9] tracking-tighter italic">{prodotto.titolo}</h1>
 
-    {prodotto.copertina && (
-      <div class="bg-white rounded-[32px] border border-gray-100 p-8 mb-8 shadow-sm">
-        <img 
-          src={prodotto.copertina.startsWith('http') ? prodotto.copertina : `${baseUrl}${prodotto.copertina}`} 
-          alt={prodotto.titolo} 
-          class="w-full h-auto object-contain rounded-2xl" 
-        />
-      </div>
-    )}
-
-    <div class="bg-gray-50 p-8 rounded-[32px] border-l-4 border-red-500 italic serif text-2xl mb-8 leading-snug">
-      "{prodotto.storia}"
-    </div>
-
-    {prodotto.esperienza && (
-      <div class="prose prose-gray mb-10">
-        <p class="text-gray-600 leading-relaxed text-lg">{prodotto.esperienza}</p>
-      </div>
-    )}
-
-    {/* SEZIONE PRODOTTI INTERNI (Per layout Guida) */}
-    {prodotto.prodotti && (
-      <div class="space-y-6 mb-10">
-        <h3 class="font-black uppercase tracking-tighter text-xl mb-4">Prodotti consigliati</h3>
-        {prodotto.prodotti.map(p => (
-          <div class="border border-gray-100 p-5 rounded-[24px] flex items-center space-x-6 bg-white shadow-sm hover:shadow-md transition-shadow">
-            <div class="w-24 h-24 bg-gray-50 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center p-2">
-               <img 
-                 src={p.img && p.img.startsWith('http') ? p.img : `${baseUrl}${p.img}`} 
-                 class="max-w-full max-h-full object-contain mix-blend-multiply" 
-                 alt={p.nome}
-               />
-            </div>
-            <div class="flex-1">
-              <h4 class="font-bold text-base leading-tight mb-1">{p.nome}</h4>
-              <p class="text-[12px] text-gray-500 mb-3 line-clamp-2">{p.desc}</p>
-              <a href={p.link} target="_blank" class="inline-flex items-center gap-2 text-[10px] bg-black text-white px-4 py-2 rounded-full font-bold uppercase tracking-widest hover:bg-red-600 transition-colors">
-                Amazon
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-              </a>
-            </div>
+    {/* --- LAYOUT PER SINGOLO --- */}
+    {prodotto.tipo === "singolo" && (
+      <div class="space-y-12">
+        {prodotto.copertina && (
+          <div class="bg-white rounded-[40px] border border-gray-100 p-8 md:p-16 shadow-sm">
+            <img 
+              src={prodotto.copertina.startsWith('http') ? prodotto.copertina : `${baseUrl}${prodotto.copertina}`} 
+              alt={prodotto.titolo} 
+              class="w-full h-auto object-contain max-h-[500px]" 
+            />
           </div>
-        ))}
+        )}
+
+        <div class="bg-gray-900 text-white p-10 md:p-16 rounded-[40px] italic serif text-3xl md:text-4xl leading-tight">
+          "{prodotto.storia}"
+        </div>
+
+        {prodotto.esperienza && (
+          <div class="prose prose-xl max-w-none">
+            <p class="text-gray-600 leading-relaxed font-medium">{prodotto.esperienza}</p>
+          </div>
+        )}
+
+        {prodotto.link_principale && (
+          <div class="pt-10">
+            <a href={prodotto.link_principale} target="_blank" class="block w-full text-center bg-red-600 text-white py-8 rounded-[30px] text-2xl font-black hover:bg-black transition-all shadow-2xl scale-100 hover:scale-[1.02]">
+              VAI SU AMAZON STORE
+            </a>
+            <p class="text-center mt-6 text-[10px] uppercase font-bold text-gray-400 tracking-widest text-balance">Prezzo e disponibilità aggiornati al {oggi}</p>
+          </div>
+        )}
       </div>
     )}
 
-    {prodotto.link_principale && (
-      <div class="p-10 border-2 border-dashed border-gray-200 rounded-[40px] bg-white text-center mb-10">
-        <a href={prodotto.link_principale} target="_blank" class="group inline-flex flex-col items-center">
-          <span class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">Check it out on</span>
-          <span class="text-3xl font-black italic hover:text-red-600 transition-colors border-b-4 border-red-500 pb-1">AMAZON STORE</span>
-        </a>
-        <p class="text-[9px] text-gray-300 mt-6 uppercase tracking-widest font-bold">Ultimo controllo: {oggi}</p>
+    {/* --- LAYOUT PER GUIDA --- */}
+    {prodotto.tipo === "guida" && (
+      <div class="space-y-10">
+        <div class="bg-red-50 p-8 rounded-[32px] mb-12">
+            <p class="text-red-900 font-medium text-lg italic text-center">"{prodotto.storia}"</p>
+        </div>
+
+        <div class="grid gap-6">
+          {prodotto.prodotti?.map((p, index) => (
+            <div class="flex flex-col md:flex-row items-center gap-8 bg-white border border-gray-100 p-8 rounded-[40px] hover:shadow-xl transition-shadow">
+              <div class="w-full md:w-1/3 aspect-square bg-gray-50 rounded-3xl flex items-center justify-center p-6 relative">
+                 <img 
+                   src={p.img && p.img.startsWith('http') ? p.img : `${baseUrl}${p.img}`} 
+                   class="max-w-full max-h-full object-contain mix-blend-multiply" 
+                   alt={p.nome}
+                 />
+                 <span class="absolute -top-4 -left-4 w-12 h-12 bg-black text-white flex items-center justify-center rounded-2xl font-black text-xl rotate-[-10deg] shadow-lg">{index + 1}</span>
+              </div>
+              <div class="flex-1 text-center md:text-left">
+                <h4 class="text-2xl font-black uppercase tracking-tighter mb-2">{p.nome}</h4>
+                <p class="text-gray-500 mb-8 leading-snug">{p.desc}</p>
+                <a href={p.link} target="_blank" class="inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-full font-black uppercase text-xs tracking-widest hover:bg-black transition-all">
+                  Get it on Amazon
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     )}
   </main>
