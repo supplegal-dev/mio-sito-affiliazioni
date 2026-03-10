@@ -1,48 +1,78 @@
 ---
 // Importiamo il database JSON che abbiamo creato prima
-import prodotti from '../../data/prodotti.json';
-import Layout from '../../layouts/Layout.astro'; // Il tuo layout base
+import prodottiData from '../../data/prodotti.json';
+import Layout from '../../layouts/Layout.astro';
 
 // Questa funzione dice ad Astro: "Crea una pagina per ogni oggetto nel JSON"
 export async function getStaticPaths() {
-  return prodotti.map((prodotto) => {
+  return prodottiData.map((prodotto) => {
     return {
-      params: { id: prodotto.id }, // L'URL sarà /prodotti/robot-tagliaerba
-      props: { prodotto },        // Passiamo tutti i dati del prodotto alla pagina
+      params: { id: prodotto.id },
+      props: { prodotto },
     };
   });
 }
 
 const { prodotto } = Astro.props;
 const oggi = new Date().toLocaleDateString('it-IT');
+
+// RECUPERO BASE URL PER GITHUB PAGES
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title={prodotto.titolo}>
-  <main class="max-w-2xl mx-auto p-4">
+  <main class="max-w-2xl mx-auto p-4 pt-10">
+    <a href={`${baseUrl}/`} class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-black mb-8 inline-block transition-colors">
+      ← Back to Selection
+    </a>
+
     <div class="flex justify-between uppercase text-[10px] font-black tracking-widest mb-4">
-      <span class="text-amber-600">{prodotto.categoria}</span>
-      {prodotto.voto && <span class="italic">Valutazione: {prodotto.voto}</span>}
+      <span class="text-red-600">{prodotto.categoria}</span>
+      {prodotto.voto && <span class="italic">Score: {prodotto.voto}/10</span>}
     </div>
 
-    <h1 class="text-4xl serif mb-8">{prodotto.titolo}</h1>
+    <h1 class="text-4xl md:text-5xl serif mb-8 leading-tight">{prodotto.titolo}</h1>
 
-    {prodotto.copertina && <img src={prodotto.copertina} alt={prodotto.titolo} class="w-full rounded-2xl mb-8" />}
+    {prodotto.copertina && (
+      <div class="bg-white rounded-[32px] border border-gray-100 p-8 mb-8 shadow-sm">
+        <img 
+          src={prodotto.copertina.startsWith('http') ? prodotto.copertina : `${baseUrl}${prodotto.copertina}`} 
+          alt={prodotto.titolo} 
+          class="w-full h-auto object-contain rounded-2xl" 
+        />
+      </div>
+    )}
 
-    <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-black italic serif text-xl mb-8">
+    <div class="bg-gray-50 p-8 rounded-[32px] border-l-4 border-red-500 italic serif text-2xl mb-8 leading-snug">
       "{prodotto.storia}"
     </div>
 
-    {prodotto.esperienza && <p class="text-gray-600 leading-relaxed mb-10">{prodotto.esperienza}</p>}
+    {prodotto.esperienza && (
+      <div class="prose prose-gray mb-10">
+        <p class="text-gray-600 leading-relaxed text-lg">{prodotto.esperienza}</p>
+      </div>
+    )}
 
+    {/* SEZIONE PRODOTTI INTERNI (Per layout Guida) */}
     {prodotto.prodotti && (
       <div class="space-y-6 mb-10">
+        <h3 class="font-black uppercase tracking-tighter text-xl mb-4">Prodotti consigliati</h3>
         {prodotto.prodotti.map(p => (
-          <div class="border border-gray-100 p-4 rounded-xl flex items-center space-x-4 bg-white shadow-sm">
-            <img src={p.img} class="w-20 h-20 object-contain" />
+          <div class="border border-gray-100 p-5 rounded-[24px] flex items-center space-x-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+            <div class="w-24 h-24 bg-gray-50 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center p-2">
+               <img 
+                 src={p.img && p.img.startsWith('http') ? p.img : `${baseUrl}${p.img}`} 
+                 class="max-w-full max-h-full object-contain mix-blend-multiply" 
+                 alt={p.nome}
+               />
+            </div>
             <div class="flex-1">
-              <h4 class="font-bold text-sm">{p.nome}</h4>
-              <p class="text-[11px] text-gray-500 mb-2">{p.desc}</p>
-              <a href={p.link} class="inline-block text-[9px] bg-black text-white px-3 py-1 rounded font-bold uppercase">Amazon</a>
+              <h4 class="font-bold text-base leading-tight mb-1">{p.nome}</h4>
+              <p class="text-[12px] text-gray-500 mb-3 line-clamp-2">{p.desc}</p>
+              <a href={p.link} target="_blank" class="inline-flex items-center gap-2 text-[10px] bg-black text-white px-4 py-2 rounded-full font-bold uppercase tracking-widest hover:bg-red-600 transition-colors">
+                Amazon
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
             </div>
           </div>
         ))}
@@ -50,10 +80,17 @@ const oggi = new Date().toLocaleDateString('it-IT');
     )}
 
     {prodotto.link_principale && (
-      <div class="p-8 border-2 border-black rounded-3xl bg-white text-center mb-10">
-        <a href={prodotto.link_principale} target="_blank" class="text-xl font-bold underline">VEDI PREZZO E DISPONIBILITÀ</a>
-        <p class="text-[8px] text-gray-400 mt-4 uppercase">Rilevato il {oggi}</p>
+      <div class="p-10 border-2 border-dashed border-gray-200 rounded-[40px] bg-white text-center mb-10">
+        <a href={prodotto.link_principale} target="_blank" class="group inline-flex flex-col items-center">
+          <span class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">Check it out on</span>
+          <span class="text-3xl font-black italic hover:text-red-600 transition-colors border-b-4 border-red-500 pb-1">AMAZON STORE</span>
+        </a>
+        <p class="text-[9px] text-gray-300 mt-6 uppercase tracking-widest font-bold">Ultimo controllo: {oggi}</p>
       </div>
     )}
   </main>
 </Layout>
+
+<style>
+  .serif { font-family: 'Playfair Display', serif; }
+</style>

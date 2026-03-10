@@ -4,6 +4,9 @@ import Layout from '../layouts/Layout.astro';
 
 const prodotti = prodottiData;
 const categorie = ['tutti', ...new Set(prodotti.map(p => p.categoria))];
+
+// RECUPERO BASE URL PER GITHUB PAGES
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title="The Essential List | Curated Inspiration">
@@ -17,7 +20,7 @@ const categorie = ['tutti', ...new Set(prodotti.map(p => p.categoria))];
     <nav class="sticky top-0 bg-white/90 backdrop-blur-xl z-50 border-b border-gray-100 mb-12">
         <div class="max-w-4xl mx-auto flex space-x-3 overflow-x-auto no-scrollbar py-5 px-4 justify-start md:justify-center">
             {categorie.map(cat => (
-                <a href={cat === 'tutti' ? '/' : `/categoria/${cat}`} 
+                <a href={cat === 'tutti' ? `${baseUrl}/` : `${baseUrl}/categoria/${cat}`} 
                    class="px-6 py-2.5 rounded-full bg-[var(--pin-bg-card)] text-[var(--pin-text-main)] text-xs font-bold uppercase tracking-widest hover:bg-[var(--pin-red)] hover:text-white transition-all duration-300 whitespace-nowrap">
                     {cat}
                 </a>
@@ -45,13 +48,16 @@ const categorie = ['tutti', ...new Set(prodotti.map(p => p.categoria))];
 
                         <div class="bg-white rounded-[48px] border border-gray-100 p-4 md:p-12 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.08)] flex flex-col items-center max-w-4xl mx-auto">
                             <div class="relative w-full aspect-square md:aspect-[16/10] bg-[#fdfdfd] rounded-[40px] mb-12 flex items-center justify-center p-8 md:p-16 overflow-hidden border border-gray-50">
-                                <img src={item.copertina} class="max-w-full max-h-full object-contain mix-blend-multiply" alt={item.titolo}/>
+                                <img 
+                                    src={item.copertina && item.copertina.startsWith('http') ? item.copertina : `${baseUrl}${item.copertina}`} 
+                                    class="max-w-full max-h-full object-contain mix-blend-multiply" 
+                                    alt={item.titolo}
+                                />
                                 
-                                {/* VOTO NUMERICO IN ALTO A DESTRA */}
                                 {item.voto && (
                                     <div class="absolute top-6 right-6 bg-black text-white px-4 py-2 rounded-2xl shadow-xl flex flex-col items-center justify-center min-w-[60px]">
                                         <span class="text-[10px] font-bold uppercase tracking-widest opacity-60 leading-none mb-1">Il mio Voto</span>
-                                        <span class="text-xl font-black leading-none">{item.voto}<span class="text-[10px] opacity-40 ml-0.5"></span></span>
+                                        <span class="text-xl font-black leading-none">{item.voto}</span>
                                     </div>
                                 )}
                             </div>
@@ -78,7 +84,7 @@ const categorie = ['tutti', ...new Set(prodotti.map(p => p.categoria))];
                     </article>
                 )}
 
-                {/* --- LAYOUT GUIDA --- (Invariato) */}
+                {/* --- LAYOUT GUIDA --- */}
                 {item.tipo === "guida" && (
                     <article class="overflow-visible py-12">
                         <div class="flex flex-col items-center mb-16 px-4">
@@ -104,7 +110,11 @@ const categorie = ['tutti', ...new Set(prodotti.map(p => p.categoria))];
                                             </div>
 
                                             <div class="relative w-full aspect-square md:aspect-[16/10] bg-[#fdfdfd] rounded-[40px] mb-12 flex items-center justify-center p-8 md:p-16 overflow-hidden border border-gray-50">
-                                                <img src={p.img} class="w-full h-full object-contain mix-blend-multiply transition-transform duration-1000 group-hover/card:scale-105" alt={p.nome} />
+                                                <img 
+                                                    src={p.img && p.img.startsWith('http') ? p.img : `${baseUrl}${p.img}`} 
+                                                    class="w-full h-full object-contain mix-blend-multiply transition-transform duration-1000" 
+                                                    alt={p.nome} 
+                                                />
                                             </div>
 
                                             <div class="w-full max-w-3xl text-center">
