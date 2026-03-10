@@ -1,0 +1,157 @@
+---
+import prodottiData from '../../data/prodotti.json';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const tutteLeCategorie = [...new Set(prodottiData.map(p => p.categoria))];
+  
+  return tutteLeCategorie.map((cat) => {
+    const prodottiFiltrati = prodottiData.filter(p => p.categoria === cat);
+    return {
+      params: { categoria: cat },
+      props: { prodotti: prodottiFiltrati, categoria: cat },
+    };
+  });
+}
+
+const { categoria, prodotti } = Astro.props;
+const categorieNav = ['tutti', ...new Set(prodottiData.map(p => p.categoria))];
+---
+
+<Layout title={`The ${categoria} List | Curated Inspiration`}>
+    <header class="py-12 text-center max-w-4xl mx-auto px-4">
+        <h1 class="text-6xl font-black tracking-tighter uppercase italic text-gray-900">
+            The <span class="text-gray-300">{categoria}</span> List
+        </h1>
+        <div class="h-1 w-12 bg-red-500 mx-auto mt-4 rounded-full"></div>
+    </header>
+
+    <nav class="sticky top-0 bg-white/80 backdrop-blur-xl z-50 border-b border-gray-50 mb-10">
+        <div class="max-w-4xl mx-auto flex space-x-3 overflow-x-auto no-scrollbar py-4 px-4 justify-start md:justify-center">
+            {categorieNav.map(cat => (
+                <a href={cat === 'tutti' ? '/' : `/categoria/${cat}`} 
+                   class={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap ${cat === categoria ? 'bg-black text-white' : 'bg-gray-100 text-gray-800 hover:bg-black hover:text-white'}`}>
+                    {cat}
+                </a>
+            ))}
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 pb-20">
+        {prodotti.map((item) => (
+            <div class="mb-20">
+                {/* --- LAYOUT SINGOLO --- */}
+                {item.tipo === "singolo" && (
+                    <article class="relative group bg-[#F9F9F9] rounded-[40px] overflow-hidden border border-gray-100 p-6 md:p-10 transition-all hover:shadow-xl">
+                        <div class="flex flex-col md:flex-row gap-10 items-center">
+                            <div class="w-full md:w-1/2 order-2 md:order-1">
+                                <div class="flex gap-2 mb-4">
+                                    <span class="text-[9px] font-black uppercase tracking-[0.2em] text-red-600 bg-red-50 px-3 py-1 rounded-full">{item.categoria}</span>
+                                    {item.voto && <span class="bg-black text-white px-3 py-1 rounded-full text-[9px] font-black italic uppercase">Score: {item.voto}</span>}
+                                </div>
+                                <h2 class="serif text-4xl leading-tight mb-6 text-gray-900">{item.titolo}</h2>
+                                <p class="text-gray-600 leading-relaxed mb-8 italic text-lg border-l-2 border-red-200 pl-4">"{item.storia}"</p>
+                                <a href={item.link_principale} target="_blank" class="inline-block bg-black text-white px-8 py-4 rounded-2xl font-bold text-xs tracking-widest hover:bg-red-600 transition-colors shadow-lg">
+                                    SCOPRI ORA
+                                </a>
+                            </div>
+                            <div class="w-full md:w-1/2 order-1 md:order-2">
+                                <div class="bg-white rounded-[30px] shadow-sm p-8 aspect-square flex items-center justify-center overflow-hidden">
+                                    <img src={item.copertina} class="max-w-full max-h-full object-contain" alt={item.titolo} />
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                )}
+
+{/* --- LAYOUT GUIDA (CAROSELLO CON FRECCE) --- */}
+{/* --- LAYOUT GUIDA (CAROSELLO CON FRECCE SMARTPHONE & DESKTOP) --- */}
+{item.tipo === "guida" && (
+    <article class="bg-white mb-20 relative group/article">
+        <div class="flex flex-col items-center mb-10 px-4">
+            <h2 class="serif text-4xl text-center mb-4">{item.titolo}</h2>
+            <div class="h-1 w-8 bg-red-500 rounded-full"></div>
+        </div>
+        
+        <div class="relative max-w-full group">
+            {/* Freccia Sinistra - Visibile su mobile (piccola) e desktop */}
+            <button 
+                onclick={`this.parentElement.querySelector('.carousel-container').scrollBy({left: -280, behavior: 'smooth'})`}
+                class="absolute left-2 md:left-[-20px] top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur shadow-lg border border-gray-100 text-black w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full hover:bg-black hover:text-white transition-all"
+                aria-label="Precedente"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+
+            {/* Contenitore Carosello */}
+            <div class="carousel-container flex space-x-6 overflow-x-auto pb-10 px-4 no-scrollbar snap-x snap-mandatory scroll-smooth">
+                {item.prodotti?.map((p, index) => (
+                    <div class="min-w-[85%] md:min-w-[45%] snap-center group bg-[#F7F7F7] rounded-[32px] p-4 transition-all hover:bg-white hover:shadow-2xl border border-transparent hover:border-gray-100">
+                        <div class="relative aspect-square mb-4 overflow-hidden flex items-center justify-center bg-white rounded-[24px] p-6 shadow-sm">
+                            <img 
+                                src={p.img} 
+                                class="max-w-full max-h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105" 
+                                alt={p.nome} 
+                                loading="lazy"
+                            />
+                            <div class="absolute top-3 left-3 bg-red-600 text-white text-sm font-black w-10 h-10 flex items-center justify-center rounded-xl rotate-[-5deg] shadow-md border-2 border-white">
+                                {index + 1}
+                            </div>
+                        </div>
+                        
+                        <div class="px-2 pb-2 flex justify-between items-center gap-4">
+                            <div class="flex-1">
+                                <h4 class="text-md font-bold uppercase tracking-tighter text-gray-900 mb-1 leading-tight">{p.nome}</h4>
+                                <p class="text-[10px] text-gray-400 line-clamp-1 italic uppercase tracking-wider">{p.desc}</p>
+                            </div>
+                            <a href={p.link} target="_blank" class="bg-gray-100 text-black p-2.5 rounded-lg hover:bg-black hover:text-white transition-all shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Freccia Destra - Visibile su mobile (piccola) e desktop */}
+            <button 
+                onclick={`this.parentElement.querySelector('.carousel-container').scrollBy({left: 280, behavior: 'smooth'})`}
+                class="absolute right-2 md:right-[-20px] top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur shadow-lg border border-gray-100 text-black w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full hover:bg-black hover:text-white transition-all"
+                aria-label="Successivo"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+    </article>
+)}
+            </div>
+        ))}
+    </main>
+</Layout>
+
+<style is:global>
+    /* Font principale ispirato a Pinterest */
+    body { 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        background-color: #ffffff;
+    }
+
+    /* Il titolo in corsivo elegante */
+    .serif { 
+        font-family: 'Playfair Display', serif; 
+        font-style: italic; 
+    }
+
+    /* Ombra Pinterest: Leggera e diffusa */
+    .pinterest-shadow {
+        box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    /* Nascondi la scrollbar ma mantieni lo scroll */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Bottone pillola tipico di Pinterest */
+    .btn-pinterest {
+        @apply bg-[#e60023] text-white px-5 py-3 rounded-full font-bold text-sm hover:bg-[#ad001d] transition-colors shadow-md;
+    }
+</style>

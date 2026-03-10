@@ -1,0 +1,59 @@
+---
+// Importiamo il database JSON che abbiamo creato prima
+import prodotti dal '../../data/prodotti.json';
+import Layout dal '../../layouts/Layout.astro'; // Il tuo layout base
+
+// Questa funzione dice ad Astro: "Crea una pagina per ogni oggetto nel JSON"
+export async function getStaticPaths() {
+  return prodotti.map((prodotto) => {
+    return {
+      params: { id: prodotto.id }, // L'URL sarà /prodotti/robot-tagliaerba
+      props: { prodotto },        // Passiamo tutti i dati del prodotto alla pagina
+    };
+  });
+}
+
+const { prodotto } = Astro.props;
+const oggi = new Date().toLocaleDateString('it-IT');
+---
+
+<Layout title={prodotto.titolo}>
+  <main class="max-w-2xl mx-auto p-4">
+    <div class="flex justify-between uppercase text-[10px] font-black tracking-widest mb-4">
+      <span class="text-amber-600">{prodotto.categoria}</span>
+      {prodotto.voto && <span class="italic">Valutazione: {prodotto.voto}</span>}
+    </div>
+
+    <h1 class="text-4xl serif mb-8">{prodotto.titolo}</h1>
+
+    {prodotto.copertina && <img src={prodotto.copertina} alt={prodotto.titolo} class="w-full rounded-2xl mb-8" />}
+
+    <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-black italic serif text-xl mb-8">
+      "{prodotto.storia}"
+    </div>
+
+    {prodotto.esperienza && <p class="text-gray-600 leading-relaxed mb-10">{prodotto.esperienza}</p>}
+
+    {prodotto.prodotti && (
+      <div class="space-y-6 mb-10">
+        {prodotto.prodotti.map(p => (
+          <div class="border border-gray-100 p-4 rounded-xl flex items-center space-x-4 bg-white shadow-sm">
+            <img src={p.img} class="w-20 h-20 object-contain" />
+            <div class="flex-1">
+              <h4 class="font-bold text-sm">{p.nome}</h4>
+              <p class="text-[11px] text-gray-500 mb-2">{p.desc}</p>
+              <a href={p.link} class="inline-block text-[9px] bg-black text-white px-3 py-1 rounded font-bold uppercase">Amazon</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {prodotto.link_principale && (
+      <div class="p-8 border-2 border-black rounded-3xl bg-white text-center mb-10">
+        <a href={prodotto.link_principale} target="_blank" class="text-xl font-bold underline">VEDI PREZZO E DISPONIBILITÀ</a>
+        <p class="text-[8px] text-gray-400 mt-4 uppercase">Rilevato il {oggi}</p>
+      </div>
+    )}
+  </main>
+</Layout>

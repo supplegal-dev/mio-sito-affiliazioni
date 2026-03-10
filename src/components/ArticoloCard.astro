@@ -1,0 +1,97 @@
+---
+const { articolo } = Astro.props;
+const oggi = new Date().toLocaleDateString('it-IT');
+// Fallback di sicurezza: se prodotti non esiste, il sito non crasha
+const prodotti = articolo.prodotti || [];
+---
+
+<article id={articolo.id} class="mb-32 group bg-white max-w-6xl mx-auto overflow-visible">
+    {/* --- HEADER --- */}
+    <div class="flex justify-between items-center mb-8 px-4">
+        <span class="text-[11px] font-[900] uppercase tracking-[0.3em] text-[var(--pin-red)] border-b-2 border-[var(--pin-red)] pb-1">
+            {articolo.categoria}
+        </span>
+        {articolo.voto && (
+            <div class="flex items-center gap-2 bg-[#f0f0f0] px-4 py-2 rounded-full">
+                <span class="text-[var(--pin-red)] text-xs">★</span>
+                <span class="text-[#111111] text-[10px] font-black uppercase tracking-tighter">Score: {articolo.voto}</span>
+            </div>
+        )}
+    </div>
+    
+    <h2 class="serif text-5xl md:text-7xl leading-[0.85] mb-10 text-[#111111] group-hover:text-[var(--pin-red)] transition-all duration-500 tracking-tighter italic px-4">
+        {articolo.titolo}
+    </h2>
+    
+    {/* --- IMMAGINE PRINCIPALE --- */}
+    <div class="relative aspect-square md:aspect-video bg-[#f7f7f7] rounded-[var(--pin-radius)] mb-12 flex items-center justify-center p-8 border border-gray-100 shadow-sm mx-4 overflow-hidden">
+        <img 
+            src={articolo.copertina} 
+            class="max-w-full max-h-full object-contain transition-transform duration-1000 group-hover:scale-105" 
+            alt={articolo.titolo}
+        />
+        <button class="heart-pop absolute top-6 right-6 bg-white shadow-xl p-4 rounded-full text-[#111111] border border-gray-100 z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </button>
+    </div>
+
+    {/* --- STORIA / CITAZIONE --- */}
+    <div class="relative bg-[#f7f7f7] p-10 rounded-[24px] mb-16 border-l-[8px] border-[var(--pin-red)] mx-4">
+        <p class="text-[#111111] text-2xl leading-relaxed serif italic font-medium">
+            "{articolo.storia}"
+        </p>
+    </div>
+
+    {/* --- SEZIONE CAROSELLO --- */}
+    <div class="relative my-24 px-4 md:px-0 overflow-visible">
+        <h3 class="serif text-2xl italic mb-8 px-4 text-gray-400">Essential Picks</h3>
+        
+        <div class="relative group/carosello">
+            {/* Freccia SX */}
+            <button 
+                onclick="this.nextElementSibling.scrollBy({left: -400, behavior: 'smooth'})"
+                class="absolute -left-4 md:-left-8 top-1/2 -translate-y-1/2 z-50 bg-white shadow-2xl w-14 h-14 rounded-full flex items-center justify-center border border-gray-100 hover:text-[var(--pin-red)] transition-all md:opacity-0 group-hover/carosello:opacity-100"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+
+            {/* Area Scroll */}
+            <div class="carousel-scroll flex gap-6 overflow-x-auto pb-10 px-4 no-scrollbar snap-x snap-mandatory scroll-smooth">
+                {prodotti.map((p) => (
+                    <div class="min-w-[85%] md:min-w-[350px] snap-center bg-[#f7f7f7] p-6 rounded-[32px] border border-transparent hover:border-gray-200 transition-all group/card">
+                        <div class="bg-white rounded-2xl aspect-square mb-6 flex items-center justify-center p-6 shadow-sm overflow-hidden">
+                            <img src={p.img} class="max-h-full object-contain mix-blend-multiply group-hover/card:scale-110 transition-transform duration-500" />
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div class="overflow-hidden pr-2">
+                                <h4 class="font-black text-black text-lg uppercase tracking-tighter leading-none mb-2 truncate">{p.nome}</h4>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">{p.desc || 'Amazon Find'}</p>
+                            </div>
+                            <a href={p.link} target="_blank" class="bg-black text-white p-4 rounded-2xl hover:bg-[var(--pin-red)] transition-all flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Freccia DX */}
+            <button 
+                onclick="this.previousElementSibling.scrollBy({left: 400, behavior: 'smooth'})"
+                class="absolute -right-4 md:-right-8 top-1/2 -translate-y-1/2 z-50 bg-white shadow-2xl w-14 h-14 rounded-full flex items-center justify-center border border-gray-100 hover:text-[var(--pin-red)] transition-all md:opacity-0 group-hover/carosello:opacity-100"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+    </div>
+
+    {/* --- CTA FINALE --- */}
+    <div class="relative p-12 bg-[var(--pin-red)] rounded-[var(--pin-radius)] text-center shadow-xl mx-4">
+        <a href={articolo.link_principale} target="_blank" class="inline-block font-black text-3xl md:text-5xl text-white tracking-tighter uppercase italic leading-none hover:scale-105 transition-transform">
+            Get it on Amazon →
+        </a>
+        <p class="text-[9px] mt-8 uppercase tracking-[0.3em] text-white/50 font-bold">
+            *Price verified on {oggi} — Link Affiliato
+        </p>
+    </div>
+</article>
