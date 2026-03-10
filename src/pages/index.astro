@@ -4,151 +4,125 @@ import Layout from '../layouts/Layout.astro';
 
 const prodotti = prodottiData;
 const categorie = ['tutti', ...new Set(prodotti.map(p => p.categoria))];
-
-// RECUPERO BASE URL PER GITHUB PAGES
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title="The Essential List | Curated Inspiration">
-    <header class="py-16 text-center max-w-4xl mx-auto px-4">
-        <h1 class="text-6xl font-[800] tracking-tighter uppercase italic text-[var(--pin-text-main)]">
-            The Essential <span class="text-gray-200">List</span>
-        </h1>
-        <div class="h-1.5 w-12 bg-[var(--pin-red)] mx-auto mt-6 rounded-full"></div>
-    </header>
 
-    <nav class="sticky top-0 bg-white/90 backdrop-blur-xl z-50 border-b border-gray-100 mb-12">
-        <div class="max-w-4xl mx-auto flex space-x-3 overflow-x-auto no-scrollbar py-5 px-4 justify-start md:justify-center">
-            {categorie.map(cat => (
-                <a href={cat === 'tutti' ? `${baseUrl}/` : `${baseUrl}/categoria/${cat}`} 
-                   class="px-6 py-2.5 rounded-full bg-[var(--pin-bg-card)] text-[var(--pin-text-main)] text-xs font-bold uppercase tracking-widest hover:bg-[var(--pin-red)] hover:text-white transition-all duration-300 whitespace-nowrap">
-                    {cat}
+  <header class="py-16 text-center max-w-4xl mx-auto px-4">
+    <h1 class="text-6xl font-black tracking-tighter uppercase text-[#111111]">
+      The Essential <span class="text-[var(--pin-red)]">List</span>
+    </h1>
+    <div class="h-1.5 w-12 bg-[var(--pin-red)] mx-auto mt-6 rounded-full"></div>
+  </header>
+
+  <nav class="sticky top-0 bg-white/90 backdrop-blur-xl z-50 border-b border-gray-100 mb-12">
+    <div class="max-w-4xl mx-auto flex space-x-3 overflow-x-auto no-scrollbar py-5 px-4 justify-start md:justify-center">
+      {categorie.map(cat => (
+        <a href={cat === 'tutti' ? `${baseUrl}/` : `${baseUrl}/categoria/${cat}`}
+           class="px-6 py-2.5 rounded-full bg-[var(--pin-bg-light)] text-[#111111] text-xs font-bold uppercase tracking-widest hover:bg-[var(--pin-red)] hover:text-white transition-all duration-300 whitespace-nowrap">
+          {cat}
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto px-4 pb-24 space-y-12">
+    {prodotti.map((item) => (
+      <div>
+
+        {/* --- SINGOLO --- */}
+        {item.tipo === "singolo" && (
+          <article class="bg-white rounded-[48px] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.08)] p-6 md:p-10 flex flex-col md:flex-row gap-10 items-center group">
+
+            <a href={`${baseUrl}/prodotti/${item.id}`} class="w-full md:w-1/2 flex-shrink-0">
+              <div class="bg-[#fdfdfd] rounded-[40px] border border-gray-50 aspect-square flex items-center justify-center p-8 overflow-hidden">
+                <img
+                  src={item.copertina}
+                  alt={item.titolo}
+                  class="max-w-full max-h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            </a>
+
+            <div class="w-full md:w-1/2 flex flex-col items-start gap-5">
+              <div class="flex items-center gap-3">
+                <div class="h-[1px] w-6 bg-[var(--pin-red)]"></div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--pin-red)]">{item.categoria}</span>
+              </div>
+
+              <h2 class="serif text-4xl md:text-5xl italic tracking-tighter leading-[0.9] text-[#111111]">
+                {item.titolo}
+              </h2>
+
+              <p class="text-sm text-gray-500 leading-relaxed">
+                {item.storia}
+              </p>
+
+              <div class="flex gap-3 flex-wrap pt-2">
+                <a href={`${baseUrl}/prodotti/${item.id}`}
+                   class="inline-flex items-center gap-2 bg-white border-2 border-black text-black px-6 py-3 rounded-full font-bold uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-all duration-300">
+                  Leggi di più
                 </a>
-            ))}
-        </div>
-    </nav>
-
-    <main class="max-w-5xl mx-auto px-4 pb-24 overflow-visible">
-        {prodotti.map((item) => (
-            <div class="mb-32 overflow-visible">
-                
-                {/* --- LAYOUT SINGOLO --- */}
-                {item.tipo === "singolo" && (
-                    <article class="overflow-visible py-12">
-                        <div class="flex flex-col items-center mb-10 px-4">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="h-[1px] w-8 bg-[var(--pin-red)]"></div>
-                                <span class="text-[11px] font-black uppercase tracking-[0.5em] text-[var(--pin-red)]">{item.categoria}</span>
-                                <div class="h-[1px] w-8 bg-[var(--pin-red)]"></div>
-                            </div>
-                            <h2 class="serif text-5xl md:text-7xl text-center mb-8 text-[#111111] italic tracking-tighter leading-[0.9]">
-                                {item.titolo}
-                            </h2>
-                        </div>
-
-                        <div class="bg-white rounded-[48px] border border-gray-100 p-4 md:p-12 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.08)] flex flex-col items-center max-w-4xl mx-auto">
-                            <div class="relative w-full aspect-square md:aspect-[16/10] bg-[#fdfdfd] rounded-[40px] mb-12 flex items-center justify-center p-8 md:p-16 overflow-hidden border border-gray-50">
-                                <img 
-                                    src={item.copertina && item.copertina.startsWith('http') ? item.copertina : `${baseUrl}${item.copertina}`} 
-                                    class="max-w-full max-h-full object-contain mix-blend-multiply" 
-                                    alt={item.titolo}
-                                />
-                                
-                                {item.voto && (
-                                    <div class="absolute top-6 right-6 bg-black text-white px-4 py-2 rounded-2xl shadow-xl flex flex-col items-center justify-center min-w-[60px]">
-                                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-60 leading-none mb-1">Il mio Voto</span>
-                                        <span class="text-xl font-black leading-none">{item.voto}</span>
-                                    </div>
-                                )}
-                            </div>
-
-                            <div class="w-full max-w-2xl text-center space-y-6">
-                                <p class="font-black text-black text-3xl md:text-5xl uppercase tracking-tighter italic leading-[1.1] px-2 break-words hyphens-auto">
-                                    "{item.storia}"
-                                </p>
-
-                                <p class="font-black text-gray-400 text-base md:text-lg uppercase tracking-tight leading-tight px-4 pb-4 break-words">
-                                    {item.esperienza}
-                                </p>
-
-                                <div class="flex justify-center pt-4">
-                                    <a href={item.link_principale} target="_blank" class="group/btn relative inline-flex items-center gap-6 bg-[var(--pin-red)] text-white pl-10 pr-3 py-3 rounded-full hover:shadow-[0_20px_40px_rgba(230,0,35,0.4)] transition-all duration-500 overflow-hidden">
-                                        <span class="font-bold uppercase tracking-[0.2em] text-[11px]">Scopri su Amazon</span>
-                                        <div class="bg-white text-[var(--pin-red)] p-4 rounded-full shadow-lg transition-transform duration-500 group-hover/btn:rotate-[360deg]">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                )}
-
-                {/* --- LAYOUT GUIDA --- */}
-                {item.tipo === "guida" && (
-                    <article class="overflow-visible py-12">
-                        <div class="flex flex-col items-center mb-16 px-4">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="h-[1px] w-8 bg-[var(--pin-red)]"></div>
-                                <span class="text-[11px] font-black uppercase tracking-[0.5em] text-[var(--pin-red)]">{item.categoria}</span>
-                                <div class="h-[1px] w-8 bg-[var(--pin-red)]"></div>
-                            </div>
-                            <h2 class="serif text-5xl md:text-7xl text-center mb-6 text-[#111111] italic tracking-tighter leading-[0.9]">
-                                {item.titolo}
-                            </h2>
-                            <p class="text-gray-500 text-xs uppercase tracking-widest font-bold">Scorri la selezione esclusiva</p>
-                        </div>
-                        
-                        <div class="relative group/carosello overflow-visible">
-                            <div class="carousel-scroll flex overflow-x-auto pb-20 no-scrollbar snap-x snap-mandatory scroll-smooth w-full">
-                                {item.prodotti?.map((p, index) => (
-                                    <div class="min-w-full snap-center px-4 md:px-10">
-                                        <div class="bg-white rounded-[48px] border border-gray-100 p-4 md:p-12 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.08)] flex flex-col items-center">
-                                            
-                                            <div class="mb-8 opacity-30 serif text-6xl italic text-[#111111]">
-                                                {index + 1 < 10 ? `0${index + 1}` : index + 1}
-                                            </div>
-
-                                            <div class="relative w-full aspect-square md:aspect-[16/10] bg-[#fdfdfd] rounded-[40px] mb-12 flex items-center justify-center p-8 md:p-16 overflow-hidden border border-gray-50">
-                                                <img 
-                                                    src={p.img && p.img.startsWith('http') ? p.img : `${baseUrl}${p.img}`} 
-                                                    class="w-full h-full object-contain mix-blend-multiply transition-transform duration-1000" 
-                                                    alt={p.nome} 
-                                                />
-                                            </div>
-
-                                            <div class="w-full max-w-3xl text-center">
-                                                <h4 class="font-black text-black text-3xl md:text-5xl uppercase tracking-tighter mb-4 break-words">
-                                                    {p.nome}
-                                                </h4>
-                                                
-                                                <p class="font-black text-gray-500 text-base md:text-lg uppercase tracking-tight leading-tight px-2 mb-10 break-words hyphens-auto">
-                                                    {p.desc}
-                                                </p>
-
-                                                <div class="flex justify-center">
-                                                    <a href={p.link} target="_blank" class="group/btn relative inline-flex items-center gap-6 bg-[var(--pin-red)] text-white pl-10 pr-3 py-3 rounded-full hover:shadow-[0_20px_40px_rgba(230,0,35,0.4)] transition-all duration-500 overflow-hidden">
-                                                        <span class="font-bold uppercase tracking-[0.2em] text-[11px]">Vedi su Amazon</span>
-                                                        <div class="bg-white text-[var(--pin-red)] p-4 rounded-full shadow-lg transition-transform duration-500 group-hover/btn:rotate-[360deg]">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </article>
-                )}
+                <a href={item.link_principale} target="_blank"
+                   class="inline-flex items-center gap-3 bg-[var(--pin-red)] text-white pl-8 pr-3 py-3 rounded-full hover:shadow-[0_20px_40px_rgba(230,0,35,0.4)] transition-all duration-500">
+                  <span class="font-bold uppercase tracking-widest text-[10px]">Scopri su Amazon</span>
+                  <div class="bg-white text-[var(--pin-red)] p-3 rounded-full shadow-lg transition-transform duration-500 hover:rotate-[360deg]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                  </div>
+                </a>
+              </div>
             </div>
-        ))}
-    </main>
-</Layout>
+          </article>
+        )}
 
-<style>
-    .serif { font-family: 'Playfair Display', serif; }
-    .carousel-scroll { scrollbar-width: none; -ms-overflow-style: none; }
-    .carousel-scroll::-webkit-scrollbar { display: none; }
-</style>
+        {/* --- GUIDA --- */}
+        {item.tipo === "guida" && (
+          <article class="bg-white rounded-[48px] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.08)] p-6 md:p-10">
+
+            <div class="flex flex-col items-center mb-10 text-center">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="h-[1px] w-8 bg-[var(--pin-red)]"></div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-[var(--pin-red)]">{item.categoria}</span>
+                <div class="h-[1px] w-8 bg-[var(--pin-red)]"></div>
+              </div>
+              <h2 class="serif text-4xl md:text-5xl italic tracking-tighter leading-[0.9] text-[#111111] mb-4">
+                {item.titolo}
+              </h2>
+              <p class="text-sm text-gray-400 max-w-xl leading-relaxed">{item.storia}</p>
+            </div>
+
+            <div class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth gap-6 pb-6">
+              {item.prodotti?.map((p) => (
+                <div class="min-w-[75%] md:min-w-[300px] snap-center bg-[#fdfdfd] rounded-[36px] border border-gray-100 p-6 flex flex-col gap-4">
+                  <div class="bg-white rounded-[28px] aspect-square flex items-center justify-center p-6 border border-gray-50 overflow-hidden">
+                    <img src={p.img} alt={p.nome} class="max-w-full max-h-full object-contain mix-blend-multiply" />
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-bold text-[#111111] text-sm leading-tight mb-2">{p.nome}</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">{p.desc}</p>
+                  </div>
+                  <a href={p.link} target="_blank"
+                     class="inline-flex items-center gap-3 bg-[var(--pin-red)] text-white pl-6 pr-3 py-3 rounded-full hover:shadow-[0_10px_30px_rgba(230,0,35,0.3)] transition-all duration-500 self-start">
+                    <span class="font-bold uppercase tracking-widest text-[10px]">Scopri su Amazon</span>
+                    <div class="bg-white text-[var(--pin-red)] p-2.5 rounded-full shadow">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </div>
+                  </a>
+                </div>
+              ))}
+            </div>
+
+            <div class="text-center mt-6">
+              <a href={`${baseUrl}/prodotti/${item.id}`}
+                 class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-[var(--pin-red)] transition-colors">
+                Leggi la guida completa
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+            </div>
+          </article>
+        )}
+      </div>
+    ))}
+  </main>
+</Layout>

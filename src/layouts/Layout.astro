@@ -11,8 +11,7 @@ const { title } = Astro.props;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
-    {/* Font Inter per un look pulito e Playfair per il tocco elegante */}
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=Playfair+Display:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-white text-[#111111] antialiased">
     <slot />
@@ -24,18 +23,17 @@ const { title } = Astro.props;
                 The Essential <span class="text-[var(--pin-red)]">List</span>
             </h2>
 
-            {/* Box Amazon Disclaimer Chiaro */}
             <div class="max-w-2xl mx-auto mb-12 p-8 bg-[var(--pin-bg-light)] rounded-[var(--pin-radius)] border border-gray-50">
-                <p class="text-[11px] leading-relaxed text-[#767676] uppercase tracking-wider font-semibold">
+                <p class="text-sm text-[#767676]">
                     In qualità di Affiliato Amazon, questo sito riceve un guadagno dagli acquisti idonei.
                 </p>
             </div>
 
             <div class="space-y-2">
-                <p class="text-[9px] text-gray-400 uppercase tracking-[0.3em] font-bold">
+                <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold">
                     &copy; {new Date().getFullYear()} The Essential List
                 </p>
-                <p class="text-[9px] text-[var(--pin-red)] uppercase tracking-[0.2em] font-black italic">
+                <p class="text-xs text-[var(--pin-red)] uppercase tracking-widest font-bold italic">
                     Curated Amazon Finds
                 </p>
             </div>
@@ -46,32 +44,21 @@ const { title } = Astro.props;
 
 <style is:global>
     :root {
-        --pin-red: #e60023;          /* Rosso Pinterest originale */
-        --pin-bg-light: #f7f7f7;     /* Grigio chiarissimo per le card */
+        --pin-red: #e60023;
+        --pin-bg-light: #f7f7f7;
         --pin-radius: 32px;
     }
 
     body { 
-        font-family: 'Inter', sans-serif; 
+        font-family: 'Outfit', sans-serif;
         background-color: #ffffff;
     }
 
     .serif { font-family: 'Playfair Display', serif; }
 
-    /* Nascondi scrollbar */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Effetto hover per i cuoricini */
-    .heart-pop {
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .heart-pop:hover {
-        transform: scale(1.2);
-        color: var(--pin-red) !important;
-    }
-
-    /* Animazione fluida per il caricamento delle card */
     article {
         animation: fadeIn 0.8s ease-out forwards;
     }

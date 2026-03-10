@@ -14,7 +14,7 @@ const prodotti = articolo.prodotti || [];
         {articolo.voto && (
             <div class="flex items-center gap-2 bg-[#f0f0f0] px-4 py-2 rounded-full">
                 <span class="text-[var(--pin-red)] text-xs">★</span>
-                <span class="text-[#111111] text-[10px] font-black uppercase tracking-tighter">Score: {articolo.voto}</span>
+                <span class="text-[#111111] text-[10px] font-black uppercase tracking-tighter">Voto: {articolo.voto}</span>
             </div>
         )}
     </div>
@@ -65,7 +65,9 @@ const prodotti = articolo.prodotti || [];
                         <div class="flex justify-between items-end">
                             <div class="overflow-hidden pr-2">
                                 <h4 class="font-black text-black text-lg uppercase tracking-tighter leading-none mb-2 truncate">{p.nome}</h4>
-                                <p class="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">{p.desc || 'Amazon Find'}</p>
+                                <p class="text-xs text-gray-400 uppercase tracking-[0.2em] font-bold leading-relaxed">
+  {p.desc || 'Amazon Find'}
+</p>
                             </div>
                             <a href={p.link} target="_blank" class="bg-black text-white p-4 rounded-2xl hover:bg-[var(--pin-red)] transition-all flex-shrink-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
@@ -88,7 +90,7 @@ const prodotti = articolo.prodotti || [];
     {/* --- CTA FINALE --- */}
     <div class="relative p-12 bg-[var(--pin-red)] rounded-[var(--pin-radius)] text-center shadow-xl mx-4">
         <a href={articolo.link_principale} target="_blank" class="inline-block font-black text-3xl md:text-5xl text-white tracking-tighter uppercase italic leading-none hover:scale-105 transition-transform">
-            Get it on Amazon →
+            Amazon →
         </a>
         <p class="text-[9px] mt-8 uppercase tracking-[0.3em] text-white/50 font-bold">
             *Price verified on {oggi} — Link Affiliato

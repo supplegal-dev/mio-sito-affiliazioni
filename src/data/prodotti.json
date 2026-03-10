@@ -6,8 +6,8 @@
     "titolo": "Il Robot che ha ridato valore ai miei weekend",
     "voto": "9.9/10",
     "copertina": "https://m.media-amazon.com/images/I/61WoTyirU-L._AC_SL1500_.jpg",
-    "storia": "Passare il sabato a tagliare l'erba era diventato un lavoro. Questo robot Worx Landroid ha cambiato tutto: ora il mio prato è sempre perfetto, come un campo da golf.",
-    "esperienza": "La tecnologia AI gli permette di muoversi in spazi stretti dove altri robot falliscono. Si controlla via App e torna alla base se piove. Un investimento che si ripaga in tempo libero. Batteria 20V Area di Taglio 1.300mq senza filo perimetrale",
+    "storia": "Ogni sabato mattina era uguale: sveglia presto, scarpe da ginnastica, un'ora sotto il sole a spingere il tosaerba. Il prato finiva, io ero a pezzi. Da quando ho il Worx Landroid, quella routine non esiste più. Mi sono ripreso i weekend.",
+    "esperienza": "L'intelligenza artificiale integrata lo guida anche negli angoli più stretti, dove gli altri robot si bloccano. Si programma dall'app, torna da solo alla base se inizia a piovere e non lascia strisce. Il prato sembra un campo da golf ogni giorno della settimana, senza che tu faccia nulla.",
     "link_principale": "https://amzn.to/3NsC3Df"
   },
   {
@@ -15,22 +15,23 @@
     "categoria": "giardino",
     "tipo": "guida",
     "titolo": "Kit Barbecue 2026: 3 Must-Have per grigliate da Pro",
-    "storia": "La primavera chiama la brace. Ho selezionato i tre strumenti che trasformano una cena normale in un evento gourmet.",
+    "storia": "Quante volte hai servito carne bruciata fuori e cruda dentro? O aspettato quaranta minuti che la carbonella si accendesse davvero? Ho selezionato i tre strumenti che eliminano questi problemi per sempre e trasformano ogni grigliata in un successo garantito.",
     "prodotti": [
       {
         "nome": "Termometro Wireless Meater",
-        "desc": "Controlli la cottura della carne dallo smartphone.",
+        "desc": "Monitora la temperatura interna della carne in tempo reale direttamente dallo smartphone. Niente più tagli per controllare la cottura: ogni bistecca esce perfetta.",
         "link": "https://amzn.to/4uj19VC",
         "img": "https://m.media-amazon.com/images/I/61C9DAvebML._AC_SL1000_.jpg"
       },
       {
         "nome": "Ciminiera di Accensione Rapidfire",
-        "desc": "Carbonella pronta in 15 minuti senza sforzo.",
+        "desc": "Porta la carbonella alla temperatura ideale in soli 15 minuti, senza liquido accendifuoco e senza fumo in faccia. Indispensabile per iniziare a grigliare subito.",
         "link": "https://amzn.to/47jm6Ga",
         "img": "https://m.media-amazon.com/images/I/81hFML-GdLL._AC_SL1500_.jpg"
       },
       {
         "nome": "Kit Utensili in Acciaio Inox",
+        "desc": "Set professionale con spatola, pinze e forchettone in acciaio inox resistente al calore. Manici antiscivolo e borsa inclusa: tutto quello che ti serve, sempre a portata di mano.",
         "link": "https://amzn.to/4sw57sn",
         "img": "https://m.media-amazon.com/images/I/815UI4q-nxL._AC_SL1500_.jpg"
       }
@@ -43,8 +44,8 @@
     "titolo": "La Friggitrice ad Aria che ha mandato in pensione il mio forno",
     "voto": "9.9/10",
     "copertina": "https://m.media-amazon.com/images/I/71xZ5LUNIrL._AC_SX679_.jpg",
-    "storia": "Ero scettica, ma la Cosori TurboBlaze è diventata l'elettrodomestico più usato in casa. Patatine croccanti e pollo succoso in metà tempo.",
-    "esperienza": "Capienza da 6L (perfetta per una famiglia), 9 funzioni preimpostate e una facilità di pulizia imbattibile. È silenziosissima rispetto ai modelli economici.",
+     "storia": "Ero convinta fosse l'ennesimo elettrodomestico da usare tre volte e dimenticare in un cassetto. Invece la Cosori TurboBlaze è diventata quella che accendo ogni giorno. Patatine croccanti, pollo succoso, verdure perfette: in metà tempo e senza scaldare tutta la cucina.",
+    "esperienza": "Sei litri di capienza bastano per tutta la famiglia. Le nove funzioni preimpostate tolgono ogni dubbio su temperatura e tempi. Si smonta e si lava in un minuto. Ed è così silenziosa che non ti accorgi nemmeno che sta lavorando, a differenza di quasi tutti i modelli economici.",
     "link_principale": "https://amzn.to/4upUKZ8"
   },
   {
@@ -54,8 +55,8 @@
     "titolo": "L'etichettatrice vintage che trasforma il disordine in design",
     "voto": "9.2/10",
     "copertina": "https://m.media-amazon.com/images/I/717E-LiZWjL._AC_SX679_.jpg",
-    "storia": "Ho sempre sognato una dispensa perfetta come quelle che si vedono online. Questa NIIMBOT B21 Pro non è solo un attrezzo, è un oggetto d'arredo.",
-    "esperienza": "La qualità di stampa a 300DPI è nitidissima. Si collega al telefono via Bluetooth e l'app è piena di icone e font bellissimi.",
+    "storia": "Barattoli tutti uguali, scatole senza nome, cassetti caotici. Sapevo cosa volevo ottenere, ma non trovavo lo strumento giusto. La NIIMBOT B21 Pro non è solo un'etichettatrice: è l'oggetto che ha trasformato la mia dispensa nelle foto che guardavo su Pinterest.",
+    "esperienza": "Stampa a 300DPI con una nitidezza sorprendente. Si collega via Bluetooth al telefono in pochi secondi e l'app offre centinaia di icone, font e template pronti. Non serve il nastro inchiostrato: le etichette termiche durano nel tempo e non sbiadiscono. Bello da usare, bello da esporre.",
     "link_principale": "https://amzn.to/3LdIrgH"
   },
   {
@@ -65,8 +66,8 @@
     "titolo": "Ho smesso di passare il mocio: la rivoluzione Tineco",
     "voto": "9.7/10",
     "copertina": "https://m.media-amazon.com/images/I/71WjyC+l5GL._AC_SL1500_.jpg",
-    "storia": "Aspira e lava contemporaneamente",
-    "esperienza": "Aspira i liquidi, lava le macchie ostinate e si pulisce da solo sulla base. Ideale per chi ha bambini o animali.",
+    "storia": "Prima aspiravo, poi lavavo, poi aspettavo che il pavimento asciugasse. Venti minuti di lavoro per una stanza. Con il Tineco S5 faccio tutto in un solo passaggio, in metà tempo. Non riesco a immaginare come facessi prima.",
+    "esperienza": "Aspira i detriti solidi e lava le macchie ostinate nello stesso momento. Rileva automaticamente lo sporco e aumenta la potenza dove serve. La base di ricarica si autopulisce: niente cattivi odori, niente manutenzione. Perfetto per chi ha bambini, animali o semplicemente poco tempo.",
     "link_principale": "https://amzn.to/4ujuuiL"
   },
   {
@@ -74,23 +75,23 @@
     "categoria": "casa",
     "tipo": "guida",
     "titolo": "Top 3 lampade",
-    "storia": "Ecco come ho dato luce alla mia casa. Ho selezionato tre stili che trasformano una stanza.",
+    "storia": "Una stanza può avere i mobili più belli del mondo, ma senza la luce giusta non funziona. Ho provato decine di lampade prima di trovare queste tre: ognuna crea un'atmosfera diversa, ognuna risolve un problema che la luce standard non riesce a risolvere.",
     "prodotti": [
       {
         "nome": "Lampada Scalda Candela",
-        "desc": "Può essere utilizzata anche come una raffinata lampada profumata per la casa.",
+        "desc": "Scalda le candele dal basso sprigionando profumo in tutta la stanza senza fiamma. Perfetta come lampada d'atmosfera per serate rilassanti in totale sicurezza.",
         "link": "https://amzn.to/4t0gqtX",
         "img": "https://m.media-amazon.com/images/I/51ZOczeG8+L._AC_SX679_.jpg"
       },
       {
         "nome": "Lampada A Mosaico",
-        "desc": "L'uso della malta esalta il fascino estetico.",
+        "desc": "Realizzata a mano con tessere di vetro colorato. Crea giochi di luce caldi e suggestivi che trasformano qualsiasi angolo in un posto speciale.",
         "link": "https://amzn.to/4rgJETR",
         "img": "https://m.media-amazon.com/images/I/81iC73FmnUL._AC_SX679_.jpg"
       },
       {
         "nome": "Lampada A Fungo",
-        "desc": "Design senza fili ricaricabile tramite USB-C.",
+        "desc": "Design minimal senza fili, ricaricabile via USB-C con luce regolabile su tre intensità. Perfetta per comodini, scrivanie e angoli lettura dove i cavi sono un problema.",
         "link": "https://amzn.to/4jYikr1",
         "img": "https://m.media-amazon.com/images/I/81TZzlGFNnL._AC_SL1500_.jpg"
       }
@@ -101,17 +102,17 @@
     "categoria": "casa",
     "tipo": "guida",
     "titolo": "Le mie strisce Led Cob",
-    "storia": "È rispettoso dell'ambiente e non contiene radiazioni infrarosse.",
+    "storia": "Le luci standard piatte e fredde rovinano l'atmosfera di qualsiasi stanza. Le strisce LED COB sono la soluzione più semplice ed economica per aggiungere calore e profondità agli spazi: sotto i pensili, lungo le scale, dietro la TV. Il risultato è immediato.",
     "prodotti": [
       {
         "nome": "LED COB MULTICOLOR",
-        "desc": "Luce morbida, senza mercurio, sicura per gli occhi.",
+        "desc": "Luce morbida e diffusa, senza mercurio e sicura per gli occhi. Cambia colore con il telecomando per adattare l'atmosfera a ogni momento della giornata.",
         "link": "https://amzn.to/4pUb3cT",
         "img": "https://m.media-amazon.com/images/I/61nDrTIOZcL._AC_SX679_.jpg"
       },
       {
         "nome": "LED COB GIALLE",
-        "desc": "Dotata di nastro autoadesivo sul retro.",
+        "desc": "Luce calda e avvolgente con nastro autoadesivo sul retro per un'installazione veloce e pulita. Ideale sotto pensili, scale o mensole per una luce d'ambiente perfetta.",
         "link": "https://amzn.to/4bRmcIa",
         "img": "https://m.media-amazon.com/images/I/61ATzPlqQKL._AC_SX679_.jpg"
       }
@@ -121,24 +122,24 @@
     "id": "modern",
     "categoria": "casa",
     "tipo": "guida",
-    "titolo": "Top 3 Modern",
-    "storia": "Per tutta la casa.",
+    "titolo": "Top 3 Arredamenti Moderni",
+     "storia": "Non servono grandi ristrutturazioni per dare un'anima diversa alla casa. Bastano tre oggetti scelti bene, posizionati nei posti giusti. Questi sono i miei preferiti del momento: minimal, versatili e con quel dettaglio in più che fa la differenza.",
     "prodotti": [
       {
         "nome": "Vaso Ciambella",
-        "desc": "Design semplice per arredamento boho o moderno.",
+        "desc": "Forma a ciambella con design minimalista, perfetto per arredamento boho o moderno. Dona carattere a qualsiasi angolo, mensola o tavolo, anche senza fiori.",
         "link": "https://amzn.to/3LKNtBB",
         "img": "https://m.media-amazon.com/images/I/71y0wKJHZ0L._AC_SX679_.jpg"
       },
       {
         "nome": "Vassoio Marmo Naturale",
-        "desc": "Ideale come piatto da portata o portagioie.",
+        "desc": "Vassoio in marmo naturale con venature uniche. Perfetto come base per candele, portagioie sul comodino o piatto da portata per aperitivi con stile.",
         "link": "https://amzn.to/3LBXvF8",
         "img": "https://m.media-amazon.com/images/I/61bUujb9-HL._AC_SX679_.jpg"
       },
       {
         "nome": "Specchio Irregolare",
-        "desc": "Perfetto per bagni, soggiorni e corridoi.",
+        "desc": "Specchio dalla forma organica e irregolare, effetto wavy. Aggiunge profondità e luce alla parete, perfetto per bagni, soggiorni e corridoi stretti.",
         "link": "https://amzn.to/3NC5QsY",
         "img": "https://m.media-amazon.com/images/I/612bIufv+GL._AC_SX679_.jpg"
       }
@@ -149,17 +150,17 @@
     "categoria": "auto",
     "tipo": "guida",
     "titolo": "Emergenza in Auto: I 2 gadget che ti salvano la vita",
-    "storia": "Non aspettare di rimanere a piedi di notte. Questi due oggetti devono stare in ogni bagagliaio.",
+    "storia": "Batteria scarica di notte, in autostrada, da soli. O una gomma a terra a chilometri dal primo benzinaio. Sono situazioni che capitano, e quando capitano vuoi essere pronto. Questi due oggetti costano poco, stanno nel bagagliaio senza ingombrare e valgono oro nel momento del bisogno.",
     "prodotti": [
       {
         "nome": "Avviatore Portatile NOCO Boost",
-        "desc": "Fa ripartire l'auto in 10 secondi senza cavi.",
+        "desc": "Fa ripartire l'auto in 10 secondi senza cavi e senza bisogno di un'altra vettura. Compatto, sicuro e compatibile con motori fino a 7L. Non uscire di casa senza.",
         "link": "https://amzn.to/4uiqcYY",
         "img": "https://m.media-amazon.com/images/I/71xLu4VJhcL._AC_SL1500_.jpg"
       },
       {
         "nome": "Compressore Xiaomi 2",
-        "desc": "Gonfia gomme, bici e palloni ovunque.",
+        "desc": "Gonfia gomme, bici e palloni ovunque in pochi minuti. Display digitale, spegnimento automatico alla pressione desiderata e alimentazione da accendisigari. Sempre pronto.",
         "link": "https://amzn.to/4b0noYY",
         "img": "https://m.media-amazon.com/images/I/51A87ILEaCL._AC_SL1000_.jpg"
       }
@@ -172,8 +173,8 @@
     "titolo": "Le Sneaker bianche definitive per la Primavera",
     "voto": "9.2/10",
     "copertina": "https://m.media-amazon.com/images/I/410+K83BbUL._AC_SX625_.jpg",
-    "storia": "Cercavo una scarpa elegante ma comoda per i weekend fuori porta.",
-    "esperienza": "In pelle vegana, si puliscono con un panno e si abbinano a tutto.",
+    "storia": "Volevo una scarpa che stesse bene con tutto: i jeans del sabato, un vestito leggero, persino un outfit più elegante. Le sneaker bianche classiche si sporcano subito e invecchiano male. Queste no: le uso da mesi e sembrano ancora nuove.",
+    "esperienza": "Tomaia in pelle vegana morbida al tatto e resistente all'uso quotidiano. Si puliscono con un panno umido in trenta secondi. La suola è comoda anche dopo ore di cammino. Si abbinano a tutto e durano nel tempo: un acquisto che si ripaga ad ogni uscita.",
     "link_principale": "https://amzn.to/4betYdc"
   }
 ]

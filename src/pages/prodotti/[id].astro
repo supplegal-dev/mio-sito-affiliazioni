@@ -3,97 +3,149 @@ import prodottiData from '../../data/prodotti.json';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
-  return prodottiData.map((prodotto) => {
-    return {
-      params: { id: prodotto.id },
-      props: { prodotto },
-    };
-  });
+  return prodottiData.map((prodotto) => ({
+    params: { id: prodotto.id },
+    props: { prodotto },
+  }));
 }
 
 const { prodotto } = Astro.props;
-const oggi = new Date().toLocaleDateString('it-IT');
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title={prodotto.titolo}>
-  <main class="max-w-3xl mx-auto p-4 pt-10 pb-32">
-    <a href={`${baseUrl}/`} class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-black mb-8 inline-block transition-colors">
-      ← Back to Selection
+  <main class="max-w-4xl mx-auto px-4 pt-12 pb-32">
+
+    {/* --- BACK --- */}
+    <a href={`${baseUrl}/`}
+       class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-[var(--pin-red)] transition-colors mb-10">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Torna indietro
     </a>
 
-    <div class="flex justify-between items-center mb-6">
-        <span class="text-red-600 text-[10px] font-black uppercase tracking-widest bg-red-50 px-3 py-1 rounded-full">{prodotto.categoria}</span>
-        {prodotto.voto && <span class="text-xs font-bold italic bg-black text-white px-3 py-1 rounded-lg">Rating: {prodotto.voto}/10</span>}
+    {/* --- CATEGORIA + VOTO --- */}
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-3">
+        <div class="h-[1px] w-6 bg-[var(--pin-red)]"></div>
+        <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--pin-red)]">{prodotto.categoria}</span>
+      </div>
+      {prodotto.voto && (
+        <div class="bg-black text-white px-4 py-2 rounded-2xl flex flex-col items-center">
+          <span class="text-[9px] font-bold uppercase tracking-widest opacity-50 leading-none mb-0.5">Il mio Voto</span>
+          <span class="text-lg font-black leading-none">{prodotto.voto}</span>
+        </div>
+      )}
     </div>
 
-    <h1 class="text-5xl md:text-7xl serif mb-10 leading-[0.9] tracking-tighter italic">{prodotto.titolo}</h1>
+    {/* --- TITOLO --- */}
+    <h1 class="serif text-5xl md:text-7xl italic tracking-tighter leading-[0.9] text-[#111111] mb-12">
+      {prodotto.titolo}
+    </h1>
 
-    {/* --- LAYOUT PER SINGOLO --- */}
+    {/* ============================
+        LAYOUT SINGOLO
+    ============================= */}
     {prodotto.tipo === "singolo" && (
-      <div class="space-y-12">
+      <div class="space-y-8">
+
+        {/* Foto */}
         {prodotto.copertina && (
-          <div class="bg-white rounded-[40px] border border-gray-100 p-8 md:p-16 shadow-sm">
-            <img 
-              src={prodotto.copertina.startsWith('http') ? prodotto.copertina : `${baseUrl}${prodotto.copertina}`} 
-              alt={prodotto.titolo} 
-              class="w-full h-auto object-contain max-h-[500px]" 
+          <div class="bg-white rounded-[48px] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.08)] p-8 md:p-16 flex items-center justify-center aspect-square md:aspect-[16/9]">
+            <img
+              src={prodotto.copertina}
+              alt={prodotto.titolo}
+              class="max-w-full max-h-full object-contain mix-blend-multiply"
             />
           </div>
         )}
 
-        <div class="bg-gray-900 text-white p-10 md:p-16 rounded-[40px] italic serif text-3xl md:text-4xl leading-tight">
-          "{prodotto.storia}"
+        {/* Storia */}
+        <div class="bg-white rounded-[40px] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.06)] p-10 md:p-14">
+          <p class="text-base text-[#111111] leading-relaxed">
+            {prodotto.storia}
+          </p>
         </div>
 
+        {/* Esperienza */}
         {prodotto.esperienza && (
-          <div class="prose prose-xl max-w-none">
-            <p class="text-gray-600 leading-relaxed font-medium">{prodotto.esperienza}</p>
+          <div class="bg-[var(--pin-bg-light)] rounded-[40px] p-10 md:p-14">
+            <p class="text-base text-gray-600 leading-relaxed">
+              {prodotto.esperienza}
+            </p>
           </div>
         )}
 
+        {/* CTA Amazon */}
         {prodotto.link_principale && (
-          <div class="pt-10">
-            <a href={prodotto.link_principale} target="_blank" class="block w-full text-center bg-red-600 text-white py-8 rounded-[30px] text-2xl font-black hover:bg-black transition-all shadow-2xl scale-100 hover:scale-[1.02]">
-              VAI SU AMAZON STORE
+          <div class="pt-4">
+            <a href={prodotto.link_principale} target="_blank"
+               class="group/btn inline-flex items-center gap-3 bg-[var(--pin-red)] text-white pl-8 pr-3 py-3 rounded-full hover:shadow-[0_20px_40px_rgba(230,0,35,0.4)] transition-all duration-500">
+              <span class="font-bold uppercase tracking-widest text-[10px]">Scopri su Amazon</span>
+              <div class="bg-white text-[var(--pin-red)] p-3 rounded-full shadow-lg transition-transform duration-500 group-hover/btn:rotate-[360deg]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </div>
             </a>
-            <p class="text-center mt-6 text-[10px] uppercase font-bold text-gray-400 tracking-widest text-balance">Prezzo e disponibilità aggiornati al {oggi}</p>
           </div>
         )}
       </div>
     )}
 
-    {/* --- LAYOUT PER GUIDA --- */}
+    {/* ============================
+        LAYOUT GUIDA
+    ============================= */}
     {prodotto.tipo === "guida" && (
-      <div class="space-y-10">
-        <div class="bg-red-50 p-8 rounded-[32px] mb-12">
-            <p class="text-red-900 font-medium text-lg italic text-center">"{prodotto.storia}"</p>
+      <div class="space-y-8">
+
+        {/* Storia */}
+        <div class="bg-white rounded-[40px] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.06)] p-10 md:p-14">
+          <p class="text-base text-[#111111] leading-relaxed">
+            {prodotto.storia}
+          </p>
         </div>
 
-        <div class="grid gap-6">
+        {/* Prodotti */}
+        <div class="space-y-6">
           {prodotto.prodotti?.map((p, index) => (
-            <div class="flex flex-col md:flex-row items-center gap-8 bg-white border border-gray-100 p-8 rounded-[40px] hover:shadow-xl transition-shadow">
-              <div class="w-full md:w-1/3 aspect-square bg-gray-50 rounded-3xl flex items-center justify-center p-6 relative">
-                 <img 
-                   src={p.img && p.img.startsWith('http') ? p.img : `${baseUrl}${p.img}`} 
-                   class="max-w-full max-h-full object-contain mix-blend-multiply" 
-                   alt={p.nome}
-                 />
-                 <span class="absolute -top-4 -left-4 w-12 h-12 bg-black text-white flex items-center justify-center rounded-2xl font-black text-xl rotate-[-10deg] shadow-lg">{index + 1}</span>
+            <div class="bg-white rounded-[48px] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.06)] p-6 md:p-10 flex flex-col md:flex-row gap-8 items-center group">
+
+              {/* Foto + numero */}
+              <div class="w-full md:w-1/3 flex-shrink-0 relative">
+                <div class="bg-[#fdfdfd] rounded-[36px] border border-gray-50 aspect-square flex items-center justify-center p-8 overflow-hidden">
+                  <img
+                    src={p.img}
+                    alt={p.nome}
+                    class="max-w-full max-h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <span class="serif absolute -top-3 -left-3 w-10 h-10 bg-black text-white flex items-center justify-center rounded-2xl font-black text-sm italic rotate-[-8deg] shadow-lg">
+                  {index + 1}
+                </span>
               </div>
-              <div class="flex-1 text-center md:text-left">
-                <h4 class="text-2xl font-black uppercase tracking-tighter mb-2">{p.nome}</h4>
-                <p class="text-gray-500 mb-8 leading-snug">{p.desc}</p>
-                <a href={p.link} target="_blank" class="inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-full font-black uppercase text-xs tracking-widest hover:bg-black transition-all">
-                  Get it on Amazon
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </a>
+
+              {/* Testo */}
+              <div class="flex-1 flex flex-col gap-4">
+                <h3 class="font-bold text-[#111111] text-xl leading-tight">
+                  {p.nome}
+                </h3>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                  {p.desc}
+                </p>
+                <div class="pt-2">
+                  <a href={p.link} target="_blank"
+                     class="group/btn inline-flex items-center gap-3 bg-[var(--pin-red)] text-white pl-8 pr-3 py-3 rounded-full hover:shadow-[0_20px_40px_rgba(230,0,35,0.4)] transition-all duration-500">
+                    <span class="font-bold uppercase tracking-widest text-[10px]">Scopri su Amazon</span>
+                    <div class="bg-white text-[var(--pin-red)] p-3 rounded-full shadow-lg transition-transform duration-500 group-hover/btn:rotate-[360deg]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
     )}
+
   </main>
 </Layout>
 

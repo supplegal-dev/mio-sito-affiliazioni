@@ -4,7 +4,6 @@ import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
   const tutteLeCategorie = [...new Set(prodottiData.map(p => p.categoria))];
-  
   return tutteLeCategorie.map((cat) => {
     const prodottiFiltrati = prodottiData.filter(p => p.categoria === cat);
     return {
@@ -20,104 +19,125 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title={`The ${categoria} List | Curated Inspiration`}>
-    <header class="py-12 text-center max-w-4xl mx-auto px-4">
-        <h1 class="text-6xl font-black tracking-tighter uppercase italic text-gray-900">
-            The <span class="text-gray-300">{categoria}</span> List
-        </h1>
-        <div class="h-1 w-12 bg-red-500 mx-auto mt-4 rounded-full"></div>
-    </header>
 
-    <nav class="sticky top-0 bg-white/80 backdrop-blur-xl z-50 border-b border-gray-50 mb-10">
-        <div class="max-w-4xl mx-auto flex space-x-3 overflow-x-auto no-scrollbar py-4 px-4 justify-start md:justify-center">
-            {categorieNav.map(cat => (
-                <a href={cat === 'tutti' ? `${baseUrl}/` : `${baseUrl}/categoria/${cat}`} 
-                   class={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap ${cat === categoria ? 'bg-black text-white' : 'bg-gray-100 text-gray-800 hover:bg-black hover:text-white'}`}>
-                    {cat}
+  <header class="py-16 text-center max-w-4xl mx-auto px-4">
+    <h1 class="text-6xl font-black tracking-tighter uppercase text-[#111111]">
+      The <span class="text-[var(--pin-red)]">{categoria}</span> List
+    </h1>
+    <div class="h-1.5 w-12 bg-[var(--pin-red)] mx-auto mt-6 rounded-full"></div>
+  </header>
+
+  <nav class="sticky top-0 bg-white/90 backdrop-blur-xl z-50 border-b border-gray-100 mb-12">
+    <div class="max-w-4xl mx-auto flex space-x-3 overflow-x-auto no-scrollbar py-5 px-4 justify-start md:justify-center">
+      {categorieNav.map(cat => (
+        <a href={cat === 'tutti' ? `${baseUrl}/` : `${baseUrl}/categoria/${cat}`}
+           class={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 whitespace-nowrap ${
+             cat === categoria
+               ? 'bg-[var(--pin-red)] text-white'
+               : 'bg-[var(--pin-bg-light)] text-[#111111] hover:bg-[var(--pin-red)] hover:text-white'
+           }`}>
+          {cat}
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto px-4 pb-24 space-y-12">
+    {prodotti.map((item) => (
+      <div>
+
+        {/* --- SINGOLO --- */}
+        {item.tipo === "singolo" && (
+          <article class="bg-white rounded-[48px] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.08)] p-6 md:p-10 flex flex-col md:flex-row gap-10 items-center group">
+
+            <a href={`${baseUrl}/prodotti/${item.id}`} class="w-full md:w-1/2 flex-shrink-0">
+              <div class="bg-[#fdfdfd] rounded-[40px] border border-gray-50 aspect-square flex items-center justify-center p-8 overflow-hidden">
+                <img
+                  src={item.copertina}
+                  alt={item.titolo}
+                  class="max-w-full max-h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            </a>
+
+            <div class="w-full md:w-1/2 flex flex-col items-start gap-5">
+              <div class="flex items-center gap-3">
+                <div class="h-[1px] w-6 bg-[var(--pin-red)]"></div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--pin-red)]">{item.categoria}</span>
+              </div>
+
+              <h2 class="serif text-4xl md:text-5xl italic tracking-tighter leading-[0.9] text-[#111111]">
+                {item.titolo}
+              </h2>
+
+              <p class="text-sm text-gray-500 leading-relaxed">
+                {item.storia}
+              </p>
+
+              <div class="flex gap-3 flex-wrap pt-2">
+                <a href={`${baseUrl}/prodotti/${item.id}`}
+                   class="inline-flex items-center gap-2 bg-white border-2 border-black text-black px-6 py-3 rounded-full font-bold uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-all duration-300">
+                  Leggi di più
                 </a>
-            ))}
-        </div>
-    </nav>
-
-    <main class="max-w-4xl mx-auto px-4 pb-20">
-        {prodotti.map((item) => (
-            <div class="mb-20">
-                {/* --- LAYOUT SINGOLO --- */}
-                {item.tipo === "singolo" && (
-                    <article class="relative group bg-[#F9F9F9] rounded-[40px] overflow-hidden border border-gray-100 p-6 md:p-10 transition-all hover:shadow-xl">
-                        <div class="flex flex-col md:flex-row gap-10 items-center">
-                            <div class="w-full md:w-1/2 order-2 md:order-1">
-                                <div class="flex gap-2 mb-4">
-                                    <span class="text-[9px] font-black uppercase tracking-[0.2em] text-red-600 bg-red-50 px-3 py-1 rounded-full">{item.categoria}</span>
-                                </div>
-                                <a href={`${baseUrl}/prodotti/${item.id}`} class="block group">
-                                    <h2 class="serif text-4xl leading-tight mb-6 text-gray-900 group-hover:text-red-600 transition-colors">{item.titolo}</h2>
-                                </a>
-                                <p class="text-gray-600 leading-relaxed mb-8 italic text-lg border-l-2 border-red-200 pl-4">"{item.storia}"</p>
-                                <div class="flex gap-4">
-                                    <a href={`${baseUrl}/prodotti/${item.id}`} class="inline-block bg-white border border-black text-black px-6 py-4 rounded-2xl font-bold text-xs tracking-widest hover:bg-gray-50 transition-colors">LEGGI STORIA</a>
-                                    <a href={item.link_principale} target="_blank" class="inline-block bg-black text-white px-8 py-4 rounded-2xl font-bold text-xs tracking-widest hover:bg-red-600 transition-colors shadow-lg">AMAZON</a>
-                                </div>
-                            </div>
-                            <div class="w-full md:w-1/2 order-1 md:order-2">
-                                <a href={`${baseUrl}/prodotti/${item.id}`} class="block bg-white rounded-[30px] shadow-sm p-8 aspect-square flex items-center justify-center overflow-hidden">
-                                    <img 
-                                        src={item.copertina && item.copertina.startsWith('http') ? item.copertina : `${baseUrl}${item.copertina}`} 
-                                        class="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105" 
-                                        alt={item.titolo} 
-                                    />
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                )}
-
-                {/* --- LAYOUT GUIDA --- */}
-                {item.tipo === "guida" && (
-                    <article class="bg-white mb-20 relative">
-                        <div class="flex flex-col items-center mb-10 px-4">
-                            <a href={`${baseUrl}/prodotti/${item.id}`} class="group">
-                                <h2 class="serif text-4xl text-center mb-4 group-hover:text-red-600 transition-colors">{item.titolo}</h2>
-                            </a>
-                            <div class="h-1 w-8 bg-red-500 rounded-full"></div>
-                        </div>
-                        
-                        <div class="relative max-w-full group/carousel">
-                            <div class="carousel-container flex space-x-6 overflow-x-auto pb-10 px-4 no-scrollbar snap-x snap-mandatory scroll-smooth">
-                                {item.prodotti?.map((p, index) => (
-                                    <div class="min-w-[85%] md:min-w-[45%] snap-center group bg-[#F7F7F7] rounded-[32px] p-4 transition-all hover:bg-white hover:shadow-2xl border border-transparent hover:border-gray-100">
-                                        <div class="relative aspect-square mb-4 overflow-hidden flex items-center justify-center bg-white rounded-[24px] p-6 shadow-sm">
-                                            <img 
-                                                src={p.img && p.img.startsWith('http') ? p.img : `${baseUrl}${p.img}`} 
-                                                class="max-w-full max-h-full object-contain mix-blend-multiply" 
-                                                alt={p.nome} 
-                                            />
-                                            <div class="absolute top-3 left-3 bg-red-600 text-white text-sm font-black w-8 h-8 flex items-center justify-center rounded-lg">{index + 1}</div>
-                                        </div>
-                                        <div class="px-2 pb-2 flex justify-between items-center gap-4">
-                                            <div class="flex-1">
-                                                <h4 class="text-md font-bold uppercase tracking-tighter text-gray-900 mb-1 leading-tight">{p.nome}</h4>
-                                                <p class="text-[10px] text-gray-400 line-clamp-1 italic uppercase tracking-wider">{p.desc}</p>
-                                            </div>
-                                            <a href={p.link} target="_blank" class="bg-gray-100 text-black p-2.5 rounded-lg hover:bg-black hover:text-white transition-all">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div class="text-center mt-4">
-                             <a href={`${baseUrl}/prodotti/${item.id}`} class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-red-600">Vedi la guida completa →</a>
-                        </div>
-                    </article>
-                )}
+                <a href={item.link_principale} target="_blank"
+                   class="inline-flex items-center gap-3 bg-[var(--pin-red)] text-white pl-8 pr-3 py-3 rounded-full hover:shadow-[0_20px_40px_rgba(230,0,35,0.4)] transition-all duration-500">
+                  <span class="font-bold uppercase tracking-widest text-[10px]">Scopri su Amazon</span>
+                  <div class="bg-white text-[var(--pin-red)] p-3 rounded-full shadow-lg transition-transform duration-500 hover:rotate-[360deg]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                  </div>
+                </a>
+              </div>
             </div>
-        ))}
-    </main>
-</Layout>
+          </article>
+        )}
 
-<style>
-    .serif { font-family: 'Playfair Display', serif; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-</style>
+        {/* --- GUIDA --- */}
+        {item.tipo === "guida" && (
+          <article class="bg-white rounded-[48px] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.08)] p-6 md:p-10">
+
+            <div class="flex flex-col items-center mb-10 text-center">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="h-[1px] w-8 bg-[var(--pin-red)]"></div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-[var(--pin-red)]">{item.categoria}</span>
+                <div class="h-[1px] w-8 bg-[var(--pin-red)]"></div>
+              </div>
+              <h2 class="serif text-4xl md:text-5xl italic tracking-tighter leading-[0.9] text-[#111111] mb-4">
+                {item.titolo}
+              </h2>
+              <p class="text-sm text-gray-400 max-w-xl leading-relaxed">{item.storia}</p>
+            </div>
+
+            <div class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth gap-6 pb-6">
+              {item.prodotti?.map((p) => (
+                <div class="min-w-[75%] md:min-w-[300px] snap-center bg-[#fdfdfd] rounded-[36px] border border-gray-100 p-6 flex flex-col gap-4">
+                  <div class="bg-white rounded-[28px] aspect-square flex items-center justify-center p-6 border border-gray-50 overflow-hidden">
+                    <img src={p.img} alt={p.nome} class="max-w-full max-h-full object-contain mix-blend-multiply" />
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-bold text-[#111111] text-sm leading-tight mb-2">{p.nome}</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">{p.desc}</p>
+                  </div>
+                  <a href={p.link} target="_blank"
+                     class="inline-flex items-center gap-3 bg-[var(--pin-red)] text-white pl-6 pr-3 py-3 rounded-full hover:shadow-[0_10px_30px_rgba(230,0,35,0.3)] transition-all duration-500 self-start">
+                    <span class="font-bold uppercase tracking-widest text-[10px]">Scopri su Amazon</span>
+                    <div class="bg-white text-[var(--pin-red)] p-2.5 rounded-full shadow">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </div>
+                  </a>
+                </div>
+              ))}
+            </div>
+
+            <div class="text-center mt-6">
+              <a href={`${baseUrl}/prodotti/${item.id}`}
+                 class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-[var(--pin-red)] transition-colors">
+                Leggi la guida completa
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+            </div>
+          </article>
+        )}
+      </div>
+    ))}
+  </main>
+</Layout>
