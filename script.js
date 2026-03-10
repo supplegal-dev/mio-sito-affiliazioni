@@ -1,7 +1,7 @@
 const articoli = [
     // --- CATEGORIA: GIARDINO ---
     {
-        id:'worx-landroid',
+        id:'robot-tagliaerba',
         categoria: 'giardino',
         tipo: 'singolo',
         titolo: "Il Robot che ha ridato valore ai miei weekend",
