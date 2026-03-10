@@ -1,13 +1,10 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-/** @type {import('tailwindcss').Config} */
+
 export default defineConfig({
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-
-  theme: {
-    extend: {},
-  },
-
-  plugins: [],
+  // Questo serve per far capire ad Astro dove si trova il sito online
+  site: 'https://supplegal-dev.github.io',
+  // Questo è fondamentale perché il sito è dentro una sottocartella /mio-sito-affiliazioni/
+  base: '/mio-sito-affiliazioni',
   integrations: [tailwind()],
 });
